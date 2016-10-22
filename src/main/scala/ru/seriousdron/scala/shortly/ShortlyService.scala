@@ -8,8 +8,11 @@ import colossus.service.Callback
 
 class ShortlyService(context: ServerContext) extends HttpService(context) {
   override def handle = {
-    case request @ Get on Root / "hello" => {
-      Callback.successful(request.ok("Hello world"))
+    case input @ Get on Root / "api" / "v1" => {
+        Callback.successful(input.ok("zzz") )
+    }
+    case input @ Get on Root / "hello" => {
+      Callback.successful(input.ok("Hello world"))
     }
     case request @ Get on Root / "fail" => {
       Callback.successful(request.error("failure"))
