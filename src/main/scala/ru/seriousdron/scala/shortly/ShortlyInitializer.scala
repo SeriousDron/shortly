@@ -10,10 +10,10 @@ class ShortlyInitializer(worker: WorkerRef, redisAddress: InetSocketAddress) ext
   override def onConnect: (ServerContext) => ServerConnectionHandler = { 
     
     implicit val env: WorkerRef = worker
-    val redis:RedisClient[Callback] = Redis.client(redisAddress.getHostString(), redisAddress.getPort())
+    val redis:RedisClient[Callback] = Redis.client(redisAddress.getHostString, redisAddress.getPort)
     
     context => {
-      new ShortlyService(context)
+      new ShortlyService(context, redis)
     }
   }
 }
