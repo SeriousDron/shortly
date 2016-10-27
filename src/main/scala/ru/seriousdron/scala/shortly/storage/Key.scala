@@ -3,7 +3,7 @@ package ru.seriousdron.scala.shortly.storage
 /**
   * Created by seriousdron on 24.10.16.
   */
-class Key(val value:Long) {
+case class Key(value:Long) {
 
   override def toString = {
     var v: Long = value
@@ -18,6 +18,6 @@ class Key(val value:Long) {
 }
 
 object Key {
-  final val charMap = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-  final val TO_STRING_BASE = charMap.length
+  private final val charMap = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+  private final val TO_STRING_BASE = charMap.length
 }
