@@ -1,4 +1,4 @@
-package ru.seriousdron.scala.shortly.request
+package ru.seriousdron.scala.shortly.dto
 
 import java.net.URL
 

@@ -5,7 +5,7 @@ import colossus.protocols.http.HttpMethod._
 import colossus.protocols.http.HttpService
 import colossus.protocols.http.UrlParsing._
 import colossus.service.Callback
-import ru.seriousdron.scala.shortly.request.ShortenRequest
+import ru.seriousdron.scala.shortly.dto.ShortenRequest
 import ru.seriousdron.scala.shortly.storage.Storage
 
 import scala.util.{Failure, Success}
