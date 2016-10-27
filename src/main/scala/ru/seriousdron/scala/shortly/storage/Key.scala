@@ -20,4 +20,14 @@ case class Key(value:Long) {
 object Key {
   private final val charMap = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
   private final val TO_STRING_BASE = charMap.length
+  
+  def apply(key: String) = {
+    def fromString(str: List[Char], sum:Long = 0): Long = {
+      str match {
+        case Nil => sum
+        case c :: tail => fromString(tail, Key.charMap.indexOf(c) + sum * Key.TO_STRING_BASE)
+      }
+    }
+    new Key(fromString(key.toList))
+  }
 }
