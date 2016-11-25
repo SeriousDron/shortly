@@ -1,5 +1,6 @@
 package ru.seriousdron.scala.shortly.storage
 
+import scala.language.implicitConversions
 /**
   * Created by seriousdron on 24.10.16.
   */
@@ -30,4 +31,7 @@ object Key {
     }
     new Key(fromString(key.toList))
   }
+
+  implicit def stringToKey(s: String): Key = Key(s)
+  implicit def longToKey(l: Long): Key = Key(l)
 }

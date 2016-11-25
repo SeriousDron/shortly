@@ -9,7 +9,6 @@ import ru.seriousdron.scala.shortly.dto.{ShortenSuccess, ShortenRequest}
 import ru.seriousdron.scala.shortly.protocol.JsonProtocol._
 import ru.seriousdron.scala.shortly.storage.{Key, Storage}
 import scala.util.{Failure, Success}
-import spray.json._
 
 class ShortlyService(context: ServerContext, storage: Storage) extends HttpService(context) {
   override def handle = {
@@ -17,7 +16,7 @@ class ShortlyService(context: ServerContext, storage: Storage) extends HttpServi
       //TODO: different response types
       request.body.as[ShortenRequest].flatMap(req => storage.store(req.url)) match {
         case Success(stored: Callback[Long]) => stored.map(key =>
-          request.ok(ShortenSuccess(Key(key)))(SuccessEncoder)
+          request.ok(ShortenSuccess(key))
         )
         case Failure(e) =>
           Callback.successful(request.badRequest(e.toString))
@@ -31,10 +30,4 @@ class ShortlyService(context: ServerContext, storage: Storage) extends HttpServi
     }
   }
 
-  implicit object SuccessEncoder extends HttpBodyEncoder[ShortenSuccess] {
-    val jsonHeader            = HttpHeader("Content-Type", "application/json")
-    override def encode(data: ShortenSuccess): HttpBody = {
-      new HttpBody(data.toJson.toString.getBytes("UTF-8"), Some(jsonHeader))
-    }
-  }
 }
