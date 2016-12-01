@@ -37,6 +37,12 @@ class TEA(val key: Array[Int]) {
     (v0, v1)
   }
 
+  def cipher(t :(Int, Int)) : (Int, Int) = cipher(t._1, t._2)
+
+  def cipher(l: Long) : Long = {
+    Utils.intsToLong(cipher(Utils.longTo2Ints(l)))
+  }
+
   def decipher(in0: Int, in1: Int): (Int, Int) = {
     var i = 0
     var sum = TEA.DecodeSum
@@ -50,52 +56,19 @@ class TEA(val key: Array[Int]) {
     }
     (v0, v1)
   }
+
+  def decipher(t :(Int, Int)) : (Int, Int) = decipher(t._1, t._2)
+
+  def decipher(l: Long) : Long = {
+    Utils.intsToLong(decipher(Utils.longTo2Ints(l)))
+  }
 }
 
 object TEA {
-  val KeyLength = 16
-  val Cycles = 32
-  val Magic = 0x9e3779b9
-  val DecodeSum = 0xc6ef3720
-
-  def testVectors() = {
-    val pz: Array[Int] = Array.fill(1024)(0)
-    var n = 1
-
-    while (n < 65) {
-      val tea: TEA = new TEA(pz.slice(n + 2, n + 6))
-      val tuple: Tuple2[Int, Int] = tea.cipher(pz(n), pz(n + 1))
-      pz(n) = tuple._1
-      pz(n + 1) = tuple._2
-
-      if (n == (n & -n)) /* if n power of 2 */ {
-        printf("\n%3d %8x %8x %8x %8x  %8x %8x", n,
-          pz(n), pz(n + 1), pz(n + 2),
-          pz(n + 3), pz(n + 4), pz(n + 5))
-      }
-
-      pz(n + 6) = pz(n)
-
-      n += 1
-    }
-
-    n = 64
-    while (n > 0) {
-      pz(n) = pz(n + 6)
-      val tea: TEA = new TEA(pz.slice(n + 2, n + 6))
-      val tuple: Tuple2[Int, Int] = tea.decipher(pz(n), pz(n + 1))
-      pz(n) = tuple._1
-      pz(n + 1) = tuple._2
-
-      n -= 1
-    }
-
-    n = 1
-
-    printf("\n%3d %8x %8x %8x %8x  %8x %8x", n,
-      pz(n), pz(n + 1), pz(n + 2),
-      pz(n + 3), pz(n + 4), pz(n + 5))
-  }
+  private val KeyLength = 16
+  private val Cycles = 32
+  private val Magic = 0x9e3779b9
+  private val DecodeSum = 0xc6ef3720
 
   def apply(key: Array[Int]): TEA = new TEA(key)
 
