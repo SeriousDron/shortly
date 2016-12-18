@@ -7,14 +7,14 @@ import scala.language.implicitConversions
 case class Key(value:Long) {
 
   override def toString = {
-    var v: Long = value
+    var unsigned: BigInt = (BigInt(value >>> 1) << 1) + (value & 1)
     val strBuilder = new StringBuilder(7)
     do {
-      val mod = (v % Key.TO_STRING_BASE).toInt
+      val mod = (unsigned % Key.TO_STRING_BASE).toInt
       strBuilder += Key.charMap(mod)
-      v = v / Key.TO_STRING_BASE
-    } while (v > 0)
-    strBuilder.toString()
+      unsigned = unsigned / Key.TO_STRING_BASE
+    } while (unsigned != 0)
+    strBuilder.toString().reverse
   }
 }
 
