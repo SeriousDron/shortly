@@ -1,0 +1,11 @@
+.shorten-input {
+    display: flex;
+    max-width: 800px;
+    margin: auto;
+}
+.shorten-textfield {
+    flex-grow: 1;
+}
+.shorten-btn {
+    margin: 10px 0;
+}
