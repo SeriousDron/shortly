@@ -1,14 +1,16 @@
 package ru.seriousdron.scala.crypto
 
-
-/**
-  * Ciphers block with Tiny Encryption Algorithm
+/** Ciphers block with Tiny Encryption Algorithm
+  *
+  * @author SeriousDron <seriousdron@gmail.com>
+  * @constructor Create cipher instance with cipher key as 4 Ints
   * @param key Cipher key, 128-bit long as 4 32-bit Ints
   */
 class TEA(val key: Array[Int]) {
 
   if (key.length != 4) {
-    throw new IllegalArgumentException("TEA cipher key should be 128 bits long")
+    throw new IllegalArgumentException(
+      "TEA cipher key should be 128 bits long")
   }
 
   val k0 = key(0)
@@ -37,9 +39,9 @@ class TEA(val key: Array[Int]) {
     (v0, v1)
   }
 
-  def cipher(t :(Int, Int)) : (Int, Int) = cipher(t._1, t._2)
+  def cipher(t: (Int, Int)): (Int, Int) = cipher(t._1, t._2)
 
-  def cipher(l: Long) : Long = {
+  def cipher(l: Long): Long = {
     Utils.intsToLong(cipher(Utils.longTo2Ints(l)))
   }
 
@@ -57,13 +59,17 @@ class TEA(val key: Array[Int]) {
     (v0, v1)
   }
 
-  def decipher(t :(Int, Int)) : (Int, Int) = decipher(t._1, t._2)
+  def decipher(t: (Int, Int)): (Int, Int) = decipher(t._1, t._2)
 
-  def decipher(l: Long) : Long = {
+  def decipher(l: Long): Long = {
     Utils.intsToLong(decipher(Utils.longTo2Ints(l)))
   }
 }
 
+/** Factory for [[TEA]] instances
+  *
+  * @author SeriousDron <seriousdron@gmail.com>
+  */
 object TEA {
   private val KeyLength = 16
   private val Cycles = 32
@@ -74,13 +80,15 @@ object TEA {
 
   def apply(key: Array[Byte]): TEA = {
     if (key.length != TEA.KeyLength) {
-      throw new IllegalArgumentException("TEA cipher key should be 128 bits long")
+      throw new IllegalArgumentException(
+        "TEA cipher key should be 128 bits long")
     }
     val intKey = Array.ofDim[Int](4)
     var i = 0
     var j = 0
     while (j < TEA.KeyLength) {
-      intKey(i) = (key(j) << 24) | ((key(j + 1) & 0xff) << 16) | ((key(j + 2) & 0xff) << 8) | (key(j + 3) & 0xff)
+      intKey(i) = (key(j) << 24) | ((key(j + 1) & 0xff) << 16) | ((key(j + 2) & 0xff) << 8) | (key(
+          j + 3) & 0xff)
       j += 4
       i += 1
     }
@@ -90,7 +98,8 @@ object TEA {
   def apply(key: String): TEA = {
     val filtered = key.replaceAll("[^0-9A-Fa-f]", "")
     if (filtered.length != 32) {
-      throw new IllegalArgumentException("TEA cipher key should be 128 bits long")
+      throw new IllegalArgumentException(
+        "TEA cipher key should be 128 bits long")
     }
     TEA(filtered.sliding(2, 2).toArray.map(Integer.parseInt(_, 16).toByte))
   }

@@ -8,21 +8,29 @@ import colossus.service.Callback
 
 import scala.util.Try
 
-class RedisStorage(redis: RedisClient[Callback]) extends Storage {
+/** Implementation of storage with Redis
+  *
+  * @constructor Creates new storaga with RedisClient
+  * @param redis Colossus RedisClient instance
+  */
+class RedisStorage(private val redis: RedisClient[Callback]) extends Storage {
 
   override def store(url: URL): Callback[Option[Long]] =
-    getKey.flatMap(k => redis.set(ByteString(k.toString), ByteString(url.toExternalForm))
-      .map {
-        case true => Some(k)
-        case false => None
-      }
-    ).recover({ case _ => None })
+    getKey
+      .flatMap(k =>
+        redis.set(ByteString(k.toString), ByteString(url.toExternalForm)).map {
+          case true => Some(k)
+          case false => None
+      })
+      .recover({ case _ => None })
 
   override def restore(key: Long): Callback[Option[URL]] =
-    redis.getOption(ByteString(key.toString)).map({
-      case Some(s) => Some(new URL(s.utf8String))
-      case None => None
-    })
+    redis
+      .getOption(ByteString(key.toString))
+      .map({
+        case Some(s) => Some(new URL(s.utf8String))
+        case None => None
+      })
 
   private def getKey: Callback[Long] = {
     redis.incr(RedisStorage.counterKey)
@@ -30,5 +38,6 @@ class RedisStorage(redis: RedisClient[Callback]) extends Storage {
 }
 
 object RedisStorage {
-  final val counterKey: ByteString = ByteString(getClass.getCanonicalName + "counter")
+  final val counterKey: ByteString = ByteString(
+    getClass.getCanonicalName + "counter")
 }

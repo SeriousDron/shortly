@@ -7,7 +7,10 @@ import java.net.InetSocketAddress
 
 import com.typesafe.config.ConfigFactory
 
-
+/** Entry point with Colossus
+  *
+  * @author SeriousDron <seriousdron@gmail.com>
+  */
 object Main extends App {
   implicit val as = ActorSystem()
   implicit val io = IOSystem()
@@ -15,7 +18,7 @@ object Main extends App {
   val config = ConfigFactory.load()
 
   Server.start("shortly", config)(getInitializer)
-  private def getInitializer(worker: WorkerRef) : Initializer = {
+  private def getInitializer(worker: WorkerRef): Initializer = {
     new ShortlyInitializer(worker, config)
   }
 }

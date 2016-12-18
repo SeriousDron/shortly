@@ -6,14 +6,16 @@ import colossus.protocols.http.HttpBodyDecoder
 
 import scala.util.Try
 
-/**
-  * Created by seriousdron on 23.10.16.
+/** Represents user request to shorten URL
+  *
+  * @author SeriousDron <seriousdron@gmail.com>
   */
-class ShortenRequest(val url: URL) {
-  
-}
+class ShortenRequest(val url: URL) {}
 
-
+/** Implicits to construct ShortenRequest from HttpBody
+  *
+  * @author SeriousDron <seriousdron@gmail.com>
+  */
 object ShortenRequest {
 
   implicit object ShortenDecoder extends HttpBodyDecoder[ShortenRequest] {
@@ -28,4 +30,3 @@ object ShortenRequest {
   }
 
 }
-
