@@ -19,9 +19,11 @@ class RedisStorage(redis: RedisClient[Callback]) extends Storage {
     )
   }
 
-  override def restore(key: Long): Try[Callback[URL]] = Try {
-    redis.get(ByteString(key.toString)).map((s) => new URL(s.utf8String))
-  }
+  override def restore(key: Long):Callback[Option[URL]] =
+    redis.getOption(ByteString(key.toString)).map({
+      case Some(s) => Some(new URL(s.utf8String))
+      case None => None
+    })
 
   private def getKey:Callback[Long] = {
     redis.incr(RedisStorage.counterKey)

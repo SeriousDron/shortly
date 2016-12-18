@@ -7,5 +7,5 @@ import scala.util.Try
 
 trait Storage {
   def store(url: URL) : Try[Callback[Long]]
-  def restore(key: Long) : Try[Callback[URL]]
+  def restore(key: Long) : Callback[Option[URL]]
 }

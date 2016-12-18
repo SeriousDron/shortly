@@ -27,11 +27,11 @@ class ShortlyService(context: ServerContext, storage: Storage, encoder: Encoder)
       }
 
     case request @ Get on Root / key =>
-      storage.restore(encoder.decode(Key(key).value)) match {
-        case Success(stored: Callback[URL]) => stored.map(request.redirect(_))
-        case Failure(e) =>
-          Callback.successful(request.notFound(e.getMessage))
-      }
+      storage.restore(encoder.decode(Key(key).value))
+        .map({
+          case Some(url) => request.redirect(url)
+          case None      => request.notFound(key)
+        })
   }
 
 }
