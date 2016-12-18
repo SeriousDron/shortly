@@ -18,10 +18,12 @@ import scala.util.{Failure, Success}
 class ShortlyService(context: ServerContext, storage: Storage, encoder: Encoder) extends HttpService(context) {
   override def handle = {
     case request @ Post on Root / "api" / "v1" / "url" =>
-      request.body.as[ShortenRequest].flatMap(req => storage.store(req.url)) match {
-        case Success(stored: Callback[Long]) => stored.map(key =>
-          request.ok(ShortenSuccess(encoder.encode(key)))
-        )
+      request.body.as[ShortenRequest] match {
+        case Success(req) => storage.store(req.url).map({
+          case Some(key) => request.ok(ShortenSuccess(encoder.encode(key)))
+          case None =>
+            request.error("Error saving URL to storage")
+        })
         case Failure(e) =>
           Callback.successful(request.badRequest(e.toString))
       }
@@ -30,7 +32,7 @@ class ShortlyService(context: ServerContext, storage: Storage, encoder: Encoder)
       storage.restore(encoder.decode(Key(key).value))
         .map({
           case Some(url) => request.redirect(url)
-          case None      => request.notFound(key)
+          case None => request.notFound(key)
         })
   }
 
