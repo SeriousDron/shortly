@@ -76,7 +76,7 @@ object TEA {
     if (key.length != TEA.KeyLength) {
       throw new IllegalArgumentException("TEA cipher key should be 128 bits long")
     }
-    val intKey = Array[Int](4)
+    val intKey = Array.ofDim[Int](4)
     var i = 0
     var j = 0
     while (j < TEA.KeyLength) {

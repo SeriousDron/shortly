@@ -8,6 +8,16 @@ import org.scalatest.FunSuite
   */
 class TEATest extends FunSuite {
 
+  test("TEA class is properly initialized in any way of initialization") {
+    val key = Array[Int](0x2bb0f1b3, 0xc023ed11, 0x5c60bff2, 0x7072d01c)
+
+    val tea1: TEA = TEA(key)
+    assert(tea1.key.sameElements(key))
+
+    val tea2: TEA = TEA(Array(0x2b, 0xb0, 0xf1, 0xb3, 0xc0, 0x23, 0xed, 0x11, 0x5c, 0x60, 0xbf, 0xf2, 0x70, 0x72, 0xd0, 0x1c).map(_.toByte))
+    assert(tea2.key.sameElements(key))
+  }
+
   test("test TEA cipher with test vectors") {
 
     //Cipher test

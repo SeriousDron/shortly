@@ -3,7 +3,7 @@ package ru.seriousdron.scala.crypto
 /**
   * Created by seriousdron on 01.12.16.
   */
-object Utils extends App{
+object Utils {
 
   intsToLong(0x55667788, 0x11223344)
 
