@@ -1,26 +1,14 @@
 import React, { Component } from 'react';
 import ShortenInput from './components/shortenInput/ShortenInput'
+import Header from './components/header/Header'
 import './App.css';
 
 
 class App extends Component {
   render() {
     return (
-    <div className="mdl-layout mdl-js-layout">
-        <header className="mdl-layout__header mdl-layout__header--scroll">
-            <img className="mdl-layout-icon" alt="Menu" />
-            <div className="mdl-layout__header-row">
-                <span className="mdl-layout__title">Material Design Lite</span>
-                <div className="mdl-layout-spacer"></div>
-                <nav className="mdl-navigation">
-                    <a className="mdl-navigation__link" href="#">Hello</a>
-                    <a className="mdl-navigation__link" href="#">World.</a>
-                    <a className="mdl-navigation__link" href="#">How</a>
-                    <a className="mdl-navigation__link" href="#">Are</a>
-                    <a className="mdl-navigation__link" href="#">You?</a>
-                </nav>
-            </div>
-        </header>
+    <div className="mdl-layout mdl-js-layout page-background">
+        <Header/>
         <div className="mdl-layout__drawer">
             <span className="mdl-layout__title">Material Design Lite</span>
             <nav className="mdl-navigation">

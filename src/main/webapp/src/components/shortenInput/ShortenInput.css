@@ -6,6 +6,16 @@
 .shorten-textfield {
     flex-grow: 1;
 }
+.shorten-textfield input {
+    border-color: rgba(255,255,255,0.5);
+}
+.shorten-textfield label {
+    color: rgba(255,255,255,.75);
+}
 .shorten-btn {
     margin: 10px 0;
+}
+
+.shorten-progress {
+    margin: 20px auto;
 }

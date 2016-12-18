@@ -1,5 +1,9 @@
+.page-background {
+  background: url('./components/header/header.jpeg') center / cover;
+  color: white;
+}
 .grid-outer {
   margin: auto;
-  width: 1160px;
+  max-width: 1160px;
   text-align: center;
 }
