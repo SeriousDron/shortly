@@ -86,4 +86,13 @@ object TEA {
     }
     new TEA(intKey)
   }
+
+  def apply(key: String): TEA = {
+    val filtered = key.replaceAll("[^0-9A-Fa-f]", "")
+    if (filtered.length != 32) {
+      throw new IllegalArgumentException("TEA cipher key should be 128 bits long")
+    }
+    TEA(filtered.sliding(2, 2).toArray.map(Integer.parseInt(_, 16).toByte))
+  }
+
 }

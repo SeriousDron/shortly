@@ -16,6 +16,9 @@ class TEATest extends FunSuite {
 
     val tea2: TEA = TEA(Array(0x2b, 0xb0, 0xf1, 0xb3, 0xc0, 0x23, 0xed, 0x11, 0x5c, 0x60, 0xbf, 0xf2, 0x70, 0x72, 0xd0, 0x1c).map(_.toByte))
     assert(tea2.key.sameElements(key))
+
+    val tea3: TEA = TEA("2bb0f1b3c023ed115c60bff27072d01c")
+    assert(tea3.key.sameElements(key))
   }
 
   test("test TEA cipher with test vectors") {
