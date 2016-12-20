@@ -1,4 +1,5 @@
 import React, {Component} from "react";
+import ProgressBar from '../progressbar/ProgressBar'
 import "./ShortenInput.css";
 
 class ShortenInput extends Component
@@ -16,8 +17,8 @@ class ShortenInput extends Component
     }
 
     handleSubmit(event) {
-        this.setState({ inProgress: true });
         event.preventDefault();
+        this.setState({ inProgress: true });
     }
 
     render() {
@@ -32,8 +33,7 @@ class ShortenInput extends Component
                     Shorten!
                 </button>
             </form>
-            {this.state.inProgress ? <div id="p2"
-                                          className="mdl-progress mdl-js-progress mdl-progress__indeterminate shorten-progress"/> : null }
+            {this.state.inProgress && <ProgressBar /> }
         </div>
         )
     }
