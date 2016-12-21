@@ -3,6 +3,7 @@ package ru.seriousdron.scala.shortly.dto
 import java.net.URL
 
 import colossus.protocols.http.HttpBodyDecoder
+import ru.seriousdron.scala.shortly.protocol.http
 
 import scala.util.Try
 
@@ -20,12 +21,13 @@ object ShortenRequest {
 
   implicit object ShortenDecoder extends HttpBodyDecoder[ShortenRequest] {
     def decode(body: Array[Byte]) = Try {
-      val data = new String(body)
-      val parts = data.split("=")
-      if (parts.length != 2) {
-        throw new ArrayIndexOutOfBoundsException()
-      }
-      new ShortenRequest(new URL(parts(1)))
+      new ShortenRequest(
+        new URL(
+          http
+            .parseQueryString(new String(body))
+            .getFirst("url")
+            .getOrElse(throw new RuntimeException("Can't get URL from query"))
+        ))
     }
   }
 
