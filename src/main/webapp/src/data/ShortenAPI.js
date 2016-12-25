@@ -1,7 +1,6 @@
 var request = require('superagent');
 
-const PORT = 9000;
-const PREFIX = 'http://localhost:' + PORT;
+const PREFIX = process.env.REACT_APP_BACKEND;
 
 class ShortenAPI
 {
