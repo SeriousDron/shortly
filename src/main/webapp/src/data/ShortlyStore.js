@@ -17,13 +17,20 @@ const ShortlyStore = new class {
     }
 
     processEvents(payload) {
+        //noinspection FallThroughInSwitchStatementJS
         switch (payload.type) {
             case ShortlyActionTypes.SHORTEN_URL:
                 this._shorteningInProgress = true;
-                this.triggerUpdate();
+                break;
+            case ShortlyActionTypes.URL_SHORTENED:
+                this._activeUrl = 'http://shortened.com/'+payload.id;
+            // eslint-disable-next-line
+            case ShortlyActionTypes.SHORTENING_ERROR:
+                this._shorteningInProgress = false;
                 break;
             default:
         }
+        this.triggerUpdate();
         return true;
     }
 

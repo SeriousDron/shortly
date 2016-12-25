@@ -14,11 +14,12 @@ const Actions = {
         ShortenAPI.shorten(url).then((response) => {
             ShortlyDispatcher.dispatch({
                 type: ShortlyActionTypes.URL_SHORTENED,
-                id: response.data.id
+                id: response.body.key
             })
         }).catch((result) => {
             ShortlyDispatcher.dispatch({
-                type: ShortlyActionTypes.SHORTENING_ERROR
+                type: ShortlyActionTypes.SHORTENING_ERROR,
+                message: result.message
             })
         })
     },
