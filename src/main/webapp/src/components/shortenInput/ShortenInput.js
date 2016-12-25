@@ -3,6 +3,7 @@ import ShortlyActions from '../../data/ShortlyActions'
 import ShortlyStore from '../../data/ShortlyStore'
 
 import ShortenForm from './shortenForm/ShortenForm'
+import ShortenResult from './shortenResult/ShortenResult'
 import ProgressBar from '../progressbar/ProgressBar'
 
 import "./ShortenInput.css";
@@ -13,7 +14,8 @@ class ShortenInput extends Component
         super(props);
         this.state = {
             showResult: false,
-            inProgress: false
+            inProgress: false,
+            activeUrl: null
         };
     }
 
@@ -27,7 +29,9 @@ class ShortenInput extends Component
 
     shortlyUpdated(storage) {
         this.setState({
-            inProgress: storage.shorteningInProgress
+            inProgress: storage.shorteningInProgress,
+            showResult: storage.activeUrl != null,
+            activeUrl: storage.activeUrl
         })
     }
 
@@ -36,8 +40,8 @@ class ShortenInput extends Component
         <div className="mdl-cell mdl-cell--12-col">
             {
                 this.state.showResult ?
-                    <div>Result</div>
-                    : <ShortenForm onSubmit={ShortlyActions.shortenUrl}/>
+                    <ShortenResult url={this.state.activeUrl} onCopy={ShortlyActions.copyUrl} onClear={ShortlyActions.clear} />
+                    : <ShortenForm onSubmit={ShortlyActions.shortenUrl} disabled={this.state.inProgress}/>
             }
             {this.state.inProgress && <ProgressBar /> }
         </div>

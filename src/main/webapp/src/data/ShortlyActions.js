@@ -23,6 +23,19 @@ const Actions = {
             })
         })
     },
+
+    copyUrl(url) {
+        document.execCommand('copy');
+        ShortlyDispatcher.dispatch({
+            type: ShortlyActionTypes.COPY_URL
+        })
+    },
+
+    clear() {
+        ShortlyDispatcher.dispatch({
+            type: ShortlyActionTypes.CLEAR_ACTIVE
+        })
+    }
 };
 
 export default Actions;

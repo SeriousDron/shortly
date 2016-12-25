@@ -23,9 +23,13 @@ const ShortlyStore = new class {
                 this._shorteningInProgress = true;
                 break;
             case ShortlyActionTypes.URL_SHORTENED:
-                this._activeUrl = 'http://shortened.com/'+payload.id;
+                this._activeUrl = process.env.REACT_APP_BACKEND+'/'+payload.id;
             // eslint-disable-next-line
             case ShortlyActionTypes.SHORTENING_ERROR:
+                this._shorteningInProgress = false;
+                break;
+            case ShortlyActionTypes.CLEAR_ACTIVE:
+                this._activeUrl = null;
                 this._shorteningInProgress = false;
                 break;
             default:

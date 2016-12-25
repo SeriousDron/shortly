@@ -10,9 +10,23 @@
 .shorten-textfield input {
     border-color: rgba(255,255,255,0.5);
 }
+.shorten-textfield.is-disabled input.mdl-textfield__input {
+    color: rgba(255,255,255,0.75);
+    border-bottom: 1px dotted rgba(255,255,255,1);
+}
+.shorten-textfield.is-disabled label {
+    visibility: hidden;
+}
 .shorten-textfield label {
     color: rgba(255,255,255,.75);
 }
 .shorten-btn {
     margin: 10px 0;
+}
+.shorten-btn[disabled].mdl-button--accent {
+    color: rgba(66,66,66, .75);
+    background-color: rgba(255,171,64, .75);
+}
+.shorten-clear.mdl-button--icon {
+    right: 0;
 }
