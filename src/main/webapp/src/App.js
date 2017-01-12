@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ShortenInput from './components/shortenInput/ShortenInput'
 import Header from './components/header/Header'
+import Message from './components/message/Message'
 import './App.css';
 
 
@@ -42,6 +43,7 @@ class App extends Component {
                 </ul>
             </div>
         </footer>
+        <Message />
     </div>
     );
   }
